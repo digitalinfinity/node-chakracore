@@ -2418,12 +2418,31 @@ class V8_EXPORT Context {
 
   Local<Object> Global();
 
-  static Local<Context> New(
-    Isolate* isolate,
-    bool useGlobalTTState = false,
-    ExtensionConfiguration* extensions = NULL,
-    Handle<ObjectTemplate> global_template = Handle<ObjectTemplate>(),
-    Handle<Value> global_object = Handle<Value>());
+#if defined(NODE_ENGINE_CHAKRACORE)
+  inline static Local<Context> NewWithTTDSupport(
+      Isolate* isolate,
+      bool useGlobalTTState,
+      ExtensionConfiguration* extensions = NULL,
+      Handle<ObjectTemplate> global_template = Handle<ObjectTemplate>(),
+      Handle<Value> global_object = Handle<Value>())
+  {
+      return NewInternal(isolate, useGlobalTTState, extensions,
+          global_template, global_object);
+  }
+#endif
+
+  // Compat wrapper to support modules that are built against 
+  // node that is not TTT aware
+  inline static Local<Context> New(
+      Isolate* isolate,
+      ExtensionConfiguration* extensions = NULL,
+      Handle<ObjectTemplate> global_template = Handle<ObjectTemplate>(),
+      Handle<Value> global_object = Handle<Value>())
+  {
+      return NewInternal(isolate, false /* useGlobalTTState */, extensions,
+          global_template, global_object);
+  }
+
   static Local<Context> GetCurrent();
 
   Isolate* GetIsolate();
@@ -2433,6 +2452,14 @@ class V8_EXPORT Context {
   Local<Value> GetEmbedderData(int index);
   void SetSecurityToken(Handle<Value> token);
   Handle<Value> GetSecurityToken();
+
+private:
+    static Local<Context> NewInternal(
+        Isolate* isolate,
+        bool useGlobalTTState,
+        ExtensionConfiguration* extensions,
+        Handle<ObjectTemplate> global_template,
+        Handle<Value> global_object);
 };
 
 class V8_EXPORT Locker {

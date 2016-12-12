@@ -1,4 +1,4 @@
-#include "node.h"
+﻿#include "node.h"
 #include "node_internals.h"
 #include "node_watchdog.h"
 #include "base-object.h"
@@ -208,9 +208,13 @@ class ContextifyContext {
                                              CreateDataWrapper(env));
     object_template->SetHandler(config);
 
+#if ENABLE_TTD_NODE
     // Don't use TT global state -- inherit TT mode from calling script context
-    Local<Context> ctx = Context::New(env->isolate(),
+    Local<Context> ctx = Context::NewWithTTDSupport(env->isolate(),
                                       false, nullptr, object_template);
+#else
+    Local<Context> ctx = Context::New(env->isolate(), nullptr, object_template);
+#endif
 
     if (ctx.IsEmpty()) {
       env->ThrowError("Could not instantiate context");

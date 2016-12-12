@@ -50,7 +50,7 @@ Local<Object> Context::Global() {
 
 extern bool g_exposeGC;
 
-Local<Context> Context::New(Isolate* external_isolate,
+Local<Context> Context::NewInternal(Isolate* external_isolate,
                             bool useGlobalTTState,
                             ExtensionConfiguration* extensions,
                             Handle<ObjectTemplate> global_template,

@@ -1,4 +1,4 @@
-#include "node.h"
+﻿#include "node.h"
 #include "node_buffer.h"
 #include "node_constants.h"
 #include "node_file.h"
@@ -4478,7 +4478,7 @@ static void StartNodeInstance(void* arg) {
 #if ENABLE_TTD_NODE
     // Make sure first context takes TT state from global config.
     // Others created from it in runtime will inherit the TT config.
-    Local<Context> context = Context::New(isolate, s_doTTRecord);
+    Local<Context> context = Context::NewWithTTDSupport(isolate, s_doTTRecord);
 #else
     Local<Context> context = Context::New(isolate);
 #endif
@@ -4619,7 +4619,7 @@ static void StartNodeInstance_TTDReplay(void* arg) {
         array_buffer_allocator.zero_fill_field());
 #endif
 
-    Local<Context> context = Context::New(isolate, true);
+    Local<Context> context = Context::NewWithTTDSupport(isolate, true);
 
     Context::Scope context_scope(context);
     // CHAKRA-TODO : fix this to create isolate_data before setting context

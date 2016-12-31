@@ -1,4 +1,4 @@
-#include "node_url.h"
+﻿#include "node_url.h"
 #include "node.h"
 #include "node_internals.h"
 #include "env.h"
@@ -131,11 +131,13 @@ namespace url {
   static int ToUnicode(std::string* input, std::string* output) {
     output->reserve(input->length());
     *output = input->c_str();
+    return 0;
   }
 
   static int ToASCII(std::string* input, std::string* output) {
     output->reserve(input->length());
     *output = input->c_str();
+    return 0;
   }
 
   static int IsValidUTF8(std::string* input) {

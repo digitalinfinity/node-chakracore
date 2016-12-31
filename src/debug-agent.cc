@@ -1,4 +1,4 @@
-// Copyright Fedor Indutny and other Node contributors.
+﻿// Copyright Fedor Indutny and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the
@@ -155,9 +155,7 @@ void Agent::WorkerRun() {
   Isolate::CreateParams params;
   ArrayBufferAllocator array_buffer_allocator;
   params.array_buffer_allocator = &array_buffer_allocator;
-  Isolate* isolate = Isolate::New(params, nullptr,
-                                  false, false, false, false,
-                                  UINT32_MAX, UINT32_MAX);
+  Isolate* isolate = Isolate::New(params);
   {
     Locker locker(isolate);
     Isolate::Scope isolate_scope(isolate);

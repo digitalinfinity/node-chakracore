@@ -1,10 +1,11 @@
-#ifndef SRC_NODE_URL_H_
+﻿#ifndef SRC_NODE_URL_H_
 #define SRC_NODE_URL_H_
 
 #if defined(NODE_WANT_INTERNALS) && NODE_WANT_INTERNALS
 
 #include "node.h"
 #include <string>
+#include <vector>
 
 namespace node {
 namespace url {

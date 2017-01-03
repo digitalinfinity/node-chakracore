@@ -4643,7 +4643,8 @@ inline int Start_TTDReplay(Isolate* isolate, void* isolate_context,
   if (debug_enabled)
     EnableDebug(&env);
 
-  ////  JsTTDStart();
+  //// TTD Specific code
+  JsTTDStart();
 
   int64_t nextEventTime = -2;
   bool continueReplayActions = true;

@@ -485,6 +485,7 @@ namespace Js
         return FALSE;
     }
 
+#ifdef ENABLE_PROJECTION
     // Implement this function inlined so that WinRT.lib can be used without the runtime.
     HRESULT DelayLoadWinType::RoGetMetaDataFile(
         _In_ const HSTRING name,
@@ -510,4 +511,5 @@ namespace Js
 
         return E_NOTIMPL;
     }
+#endif
 }

@@ -8,11 +8,13 @@
 #include "activation.h"
 #include <winstring.h>
 
+#ifdef ENABLE_PROJECTION
 // cor.h includes corhdr.h which is not clean with warning 4091
 #pragma warning(push)
 #pragma warning(disable: 4091) /* warning C4091: 'typedef ': ignored on left of '' when no variable is declared */
 #include <cor.h>
 #pragma warning(pop)
+#endif
 
 #include "RoParameterizedIID.h"
 
@@ -101,6 +103,7 @@ namespace Js
 
     };
 
+#ifdef ENABLE_PROJECTION
     class DelayLoadWinType sealed : public DelayLoadLibrary
     {
     private:
@@ -156,6 +159,7 @@ namespace Js
             __out GUID*                             iid,
             __deref_opt_out ROPARAMIIDHANDLE*       pExtra = nullptr);
     };
+#endif
 
     class DelayLoadWindowsGlobalization sealed : public DelayLoadWinRtString
     {
@@ -312,6 +316,7 @@ namespace Js
             );
     };
 
+#ifdef ENABLE_PROJECTION
     // Implement this function inlined so that WinRT.lib can be used without the runtime.
     inline HRESULT DelayLoadWinRtRoParameterizedIID::RoGetParameterizedTypeInstanceIID(
             __in UINT32 nameElementCount,
@@ -337,4 +342,5 @@ namespace Js
 
         return E_NOTIMPL;
     }
+#endif
  }

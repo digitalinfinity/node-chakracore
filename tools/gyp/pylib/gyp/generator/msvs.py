@@ -3128,6 +3128,14 @@ def _FinalizeMSBuildSettings(spec, configuration):
   if def_file:
     _ToolAppend(msbuild_settings, 'Link', 'ModuleDefinitionFile', def_file)
   configuration['finalized_msbuild_settings'] = msbuild_settings
+
+  # Node for Windows on ARM requires at least the Windows 10 SDK
+  # to build. If it hasn't already been provided, set the default
+  # to v10.0
+  if "msvs_windows_sdk_version" not in configuration:
+    if configuration.get('msvs_configuration_platform', 'Win32') == 'ARM':
+      configuration['msvs_windows_sdk_version'] = 'v10.0'
+
   if prebuild:
     _ToolAppend(msbuild_settings, 'PreBuildEvent', 'Command', prebuild)
   if postbuild:
